@@ -12,7 +12,7 @@ struct YearMonthDayDate: ExpressibleByArgument {
 
     private static let formatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM-Y"
+        formatter.dateFormat = "dd-MM-y"
         return formatter
     }()
 

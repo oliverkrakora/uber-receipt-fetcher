@@ -25,6 +25,7 @@ struct TripResponse: Decodable {
         var container = try decoder.container(keyedBy: CodingKeys.self)
         container = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .data)
         container = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .getTrips)
+
         self.count = try container.decode(Int.self, forKey: .count)
         self.trips = try container.decode([Trip].self, forKey: .trips)
         self.paging = try container.decode(Paging.self, forKey: .pagingResult)

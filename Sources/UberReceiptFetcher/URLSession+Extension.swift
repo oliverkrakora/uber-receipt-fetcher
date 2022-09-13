@@ -8,17 +8,16 @@
 import Foundation
 
 extension URLSession {
-    func performRequest<T: Decodable>(request: URLRequest, decoder: JSONDecoder = JSONDecoder(), type: T.Type = T.self) async throws -> (T, HTTPURLResponse) {
+    func performRequest<T: Decodable>(request: URLRequest, decoder: JSONDecoder = JSONDecoder(), type: T.Type = T.self) async throws -> (T, URLResponse) {
         let (data, response) = try await data(for: request)
         let decoded = try decoder.decode(T.self, from: data)
-        return (decoded, response as! HTTPURLResponse)
+        return (decoded, response)
     }
 
-    func performDownload(request: URLRequest, destination: URL) async throws {
+    @discardableResult
+    func performDownload(request: URLRequest, destination: URL) async throws -> URLResponse {
         let (downloadURL, response) = try await download(for: request)
-        guard (response as? HTTPURLResponse)?.statusCode == 200 else {
-            throw NSError(domain: URLError.errorDomain, code: URLError.resourceUnavailable.rawValue)
-        }
         try FileManager.default.moveItem(at: downloadURL, to: destination)
+        return response
     }
 }

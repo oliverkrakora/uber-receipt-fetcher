@@ -9,5 +9,5 @@ import Foundation
 
 struct Paging: Decodable {
     let hasMore: Bool
-    let nextCursor: Int
+    let nextCursor: String?
 }
