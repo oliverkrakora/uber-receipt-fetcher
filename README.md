@@ -3,6 +3,7 @@
 A little command line utility to download receipts from Uber in batches.
 
 **Usage:**
+
 Login to your Uber account and copy the cookie from your browser session
 
 ```
