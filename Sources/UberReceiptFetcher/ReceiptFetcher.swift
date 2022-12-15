@@ -75,7 +75,6 @@ private extension ReceiptFetcher {
     func createFetchReceiptsRequest(from: Date?, to: Date?, cursor: String?) -> URLRequest {
         var request = URLRequest(url: baseURL.appendingPathComponent("graphql"))
         request.httpMethod = "POST"
-        request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         authorizeRequest(request: &request)
         request.httpBody = createFetchReceiptsGraphQLQuery(from: from, to: to, cursor: cursor).data(using: .utf8)!
         return request
@@ -84,6 +83,7 @@ private extension ReceiptFetcher {
     func authorizeRequest(request: inout URLRequest) {
         request.addValue(cookie, forHTTPHeaderField: "Cookie")
         request.addValue("x", forHTTPHeaderField: "X-Csrf-Token")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     }
 
     func createFetchReceiptsGraphQLQuery(from: Date?, to: Date?, cursor: String?) -> String {
